@@ -19,3 +19,4 @@ if __name__ == '__main__':
     # Run the dataset against the classifier for predicting accuracy
     classifier = KNN(1, dataset)
     accuracy = classifier.evaluate()
+    print(accuracy)
