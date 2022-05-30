@@ -3,6 +3,7 @@ import numpy as np
 from os import path
 
 from knn import KNN
+from selection import Selection, FORWARD_SELECTION, BACKWARD_SELECTION
 
 DATASETS_DIR = "dataset"
 DATA_SMALL_FILE = "CS205_SP_2022_SMALLtestdata__64.txt"
@@ -18,5 +19,9 @@ if __name__ == '__main__':
 
     # Run the dataset against the classifier for predicting accuracy
     classifier = KNN(1, dataset)
+    classifier.feature_list = (1, 2)
     accuracy = classifier.evaluate()
     print(accuracy)
+
+    s = Selection(FORWARD_SELECTION, dataset)
+    s.search()

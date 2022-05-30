@@ -11,9 +11,10 @@ class KNN(object):
         self.k = k
         self.data_set = data_set
         self.data_set_len = len(self.data_set)
+        self.n_features = len(self.data_set[0][1:])
+        self._feature_list = ([i for i in range(self.n_features)])
 
-    @staticmethod
-    def euclidean_distance(v1, v2):
+    def euclidean_distance(self, v1, v2):
         """
         Function to calculate the Euclidean distance between 2 vectors.
 
@@ -24,7 +25,7 @@ class KNN(object):
         distance = 0
 
         # Calculate distance (a1 - b1) ^ 2 + (a2 -b2) ^ 2 + ... + (an - bn) ^ 2
-        for i in range(len(v1)):
+        for i in self._feature_list:
             distance += pow(v1[i] - v2[i], 2)
 
         # Return the square root of that distance
@@ -44,7 +45,7 @@ class KNN(object):
 
         # Calculate the euclidean distances to all the neighbors.
         for i in range(trained_data_len):
-            distances.append((KNN.euclidean_distance(new_data_point[1:], trained_data[i][1:]), trained_data[i]))
+            distances.append((self.euclidean_distance(new_data_point[1:], trained_data[i][1:]), trained_data[i]))
 
         # Sort the distances
         distances.sort()
@@ -82,3 +83,11 @@ class KNN(object):
 
         # Return the accuracy
         return correct_count / self.data_set_len
+
+    @property
+    def feature_list(self):
+        return self._feature_list
+
+    @feature_list.setter
+    def feature_list(self, value):
+        self._feature_list = value
