@@ -3,16 +3,16 @@ import numpy as np
 from math import sqrt
 
 CLASS_INDEX = 0
+DATA_INDEX = 1
 
 
-class KNN(object):
+class NN(object):
 
-    def __init__(self, k, data_set):
-        self.k = k
+    def __init__(self, data_set):
         self.data_set = data_set
         self.data_set_len = len(self.data_set)
-        self.n_features = len(self.data_set[0][1:])
-        self._feature_list = ([i for i in range(self.n_features)])
+        self.n_features = len(self.data_set[0][DATA_INDEX:])
+        self._feature_list = tuple([i for i in range(self.n_features)])
 
     def euclidean_distance(self, v1, v2):
         """
@@ -41,23 +41,19 @@ class KNN(object):
         """
         # Get K nearest neighbors for the sample data point
         trained_data_len = len(trained_data)
-        distances = []
+        smallest_distance = 1000000
+        smallest_distance_class = 1.0
 
-        # Calculate the euclidean distances to all the neighbors.
+        # Calculate the euclidean distances to all the neighbors and get the class for the data point
+        # that has the smallest distance to the new data point.
         for i in range(trained_data_len):
-            distances.append((self.euclidean_distance(new_data_point[1:], trained_data[i][1:]), trained_data[i]))
+            distance = self.euclidean_distance(new_data_point[DATA_INDEX:], trained_data[i][DATA_INDEX:])
+            if smallest_distance > distance:
+                smallest_distance = distance
+                smallest_distance_class = trained_data[i][CLASS_INDEX]
 
-        # Sort the distances
-        distances.sort()
-
-        # Get the K nearest neighbors
-        nearest_neighbors = distances[:self.k]
-
-        # Get the first neighbor
-        nn_distance, nn = nearest_neighbors[0]
-
-        # Return the class for the nearest neighbor
-        return nn[CLASS_INDEX]
+        # Return the class found to have the smallest distance.
+        return smallest_distance_class
 
     def evaluate(self):
         """
@@ -78,7 +74,7 @@ class KNN(object):
             predicted_class = self.predict(trained_data, sample_data_for_testing)
 
             # Check the predicted class and adjust the correct count
-            if predicted_class == sample_data_for_testing[0]:
+            if predicted_class == sample_data_for_testing[CLASS_INDEX]:
                 correct_count = correct_count + 1
 
         # Return the accuracy

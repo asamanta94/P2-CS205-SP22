@@ -2,7 +2,7 @@ import numpy as np
 
 from os import path
 
-from knn import KNN
+from nn import NN
 from selection import Selection
 
 DATASETS_DIR = "dataset"
@@ -13,12 +13,22 @@ SMALL_DATASET_PATH = path.join(DATASETS_DIR, DATA_SMALL_FILE)
 LARGE_DATASET_PATH = path.join(DATASETS_DIR, DATA_LARGE_FILE)
 
 
-if __name__ == '__main__':
-    print("Welcome to Aritra Samanta's Feature Selection Algorithm.")
-    file_path = input("Type in the name of the file to test: ")
+def get_user_input():
+    """
 
-    algorithm = int(input("Type the number of the algorithm you want to run. "
-                      "(1 - Forward Selection, 2 - Backward Elimination): "))
+    :return:
+    """
+    print("Welcome to Aritra Samanta's Feature Selection Algorithm.")
+    f_path = input("Type in the name of the file to test: ")
+
+    algo = int(input("Type the number of the algorithm you want to run. "
+                     "(1 - Forward Selection, 2 - Backward Elimination): "))
+
+    return f_path, algo
+
+
+if __name__ == '__main__':
+    file_path, algorithm = get_user_input()
 
     # Get the dataset from file
     dataset = np.genfromtxt(file_path)
@@ -29,7 +39,7 @@ if __name__ == '__main__':
           .format(n_features, n_instances))
 
     # Run the dataset against the classifier for predicting accuracy
-    classifier = KNN(1, dataset)
+    classifier = NN(dataset)
     accuracy = classifier.evaluate()
 
     print("Running nearest neighbor with all {0} features, using \"leaving-one-out\" evaluation, I get"
