@@ -12,6 +12,16 @@ DATA_LARGE_FILE = "CS205_SP_2022_Largetestdata__51.txt"
 SMALL_DATASET_PATH = path.join(DATASETS_DIR, DATA_SMALL_FILE)
 LARGE_DATASET_PATH = path.join(DATASETS_DIR, DATA_LARGE_FILE)
 
+FILE_PATHS = [SMALL_DATASET_PATH]
+
+
+def get_default_rate(dataset):
+    """
+    Function to get the default rate of a given dataset.
+    :param dataset:
+    :return:
+    """
+
 
 def get_user_input():
     """
@@ -27,9 +37,14 @@ def get_user_input():
     return f_path, algo
 
 
-if __name__ == '__main__':
-    file_path, algorithm = get_user_input()
+def get_data(algorithm, file_path):
+    """
+    Function to run the algorithm on the file path.
 
+    :param algorithm:
+    :param file_path:
+    :return:
+    """
     # Get the dataset from file
     dataset = np.genfromtxt(file_path)
     n_features = len(dataset[0][1:])
@@ -48,4 +63,9 @@ if __name__ == '__main__':
     # Run feature selection algorithm
     print("Beginning Search.\n")
     s = Selection(algorithm, dataset, classifier)
-    s.search()
+    return s.search()
+
+
+if __name__ == '__main__':
+    f, a = get_user_input()
+    get_data(a, f)

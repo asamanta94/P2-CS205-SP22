@@ -1,6 +1,8 @@
 FORWARD_SELECTION = 1
 BACKWARD_ELIMINATION = 2
 
+FEATURE_SELECTION_ALGORITHMS = [FORWARD_SELECTION, BACKWARD_ELIMINATION]
+
 
 class Selection(object):
 
@@ -131,3 +133,5 @@ class Selection(object):
 
         print("\nFinished search!! The best feature subset is {0} which has an accuracy of {1:.2f}%.\n"
               .format(best_features, best_accuracy * 100))
+
+        return accuracies, features
