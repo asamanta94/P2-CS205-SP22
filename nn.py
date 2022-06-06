@@ -26,7 +26,7 @@ class NN(object):
 
         # Calculate distance (a1 - b1) ^ 2 + (a2 -b2) ^ 2 + ... + (an - bn) ^ 2
         for i in self._feature_list:
-            distance += pow(v1[i] - v2[i], 2)
+            distance += pow(v1[i - 1] - v2[i - 1], 2)
 
         # Return the square root of that distance
         return sqrt(distance)

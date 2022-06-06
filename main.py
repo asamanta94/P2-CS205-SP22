@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 
 from os import path
@@ -55,7 +57,15 @@ def get_data(algorithm, file_path):
     # Run feature selection algorithm
     print("Beginning Search.\n")
     s = Selection(algorithm, dataset, classifier)
-    return s.search()
+    start_time = time.time()
+    accuracies, features = s.search()
+    end_time = time.time()
+    duration = end_time - start_time
+    if duration < 60.00:
+        print("{0:.2f} seconds".format(duration))
+    else:
+        print("{0:.2f} minutes".format(duration / 60))
+    return accuracies, features
 
 
 if __name__ == '__main__':

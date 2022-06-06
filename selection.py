@@ -27,12 +27,12 @@ class Selection(object):
 
         for i in range(self.n_features):
             # If feature is already in the feature set no need to add.
-            if i in features:
+            if (i + 1) in features:
                 continue
 
             # Create a new feature and add it to the set.
             child = set(features)
-            child.add(i)
+            child.add(i + 1)
             child = tuple(child)
             children.append(child)
 
@@ -105,7 +105,7 @@ class Selection(object):
         best_features = ()
         feature = ()
         if self.way == BACKWARD_ELIMINATION:
-            feature = tuple([i for i in range(10)])
+            feature = tuple([i + 1 for i in range(self.n_features)])
             best_features = feature
             best_accuracy = self.classifier.evaluate()
 
