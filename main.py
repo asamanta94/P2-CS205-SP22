@@ -15,14 +15,6 @@ LARGE_DATASET_PATH = path.join(DATASETS_DIR, DATA_LARGE_FILE)
 FILE_PATHS = [SMALL_DATASET_PATH]
 
 
-def get_default_rate(dataset):
-    """
-    Function to get the default rate of a given dataset.
-    :param dataset:
-    :return:
-    """
-
-
 def get_user_input():
     """
 

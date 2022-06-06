@@ -1,3 +1,5 @@
+from nn import CLASS_INDEX
+
 FORWARD_SELECTION = 1
 BACKWARD_ELIMINATION = 2
 
@@ -9,6 +11,8 @@ class Selection(object):
     def __init__(self, way, data_set, classifier):
         self.way = way
         self.data_set = data_set
+        self.len_data_set = len(self.data_set)
+        self.default_rate = self.get_default_rate()
         self.n_features = len(self.data_set[0][1:])
         self.classifier = classifier
 
@@ -66,6 +70,17 @@ class Selection(object):
             return self.features_add_one_set(features)
         elif self.way == BACKWARD_ELIMINATION:
             return self.features_remove_one_set(features)
+
+    def get_default_rate(self):
+        """
+        Function to get the default rate of a given dataset.
+
+        :return: The length of a dataset.
+        """
+        classes = [data_point[CLASS_INDEX] for data_point in self.data_set]
+        count_class_1_0 = classes.count(1.0)
+        count_class_2_0 = classes.count(2.0)
+        return max(count_class_1_0, count_class_2_0) / self.len_data_set
 
     def search(self):
         """
