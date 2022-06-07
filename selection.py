@@ -7,6 +7,16 @@ FEATURE_SELECTION_ALGORITHMS = [FORWARD_SELECTION, BACKWARD_ELIMINATION]
 
 
 class Selection(object):
+    """
+    Class for running the feature selection algorithms. The algorithms that this class
+    can run are:
+        1. Forward Selection: The algorithm is a greedy algorithm. The algorithm starts with an empty set and keeps
+        adding features in a greedy manner by selecting the feature that, in addition to the other selected features,
+        gives the best possible accuracy.
+        2. Backward Elimination: The algorithm is a greedy algorithm. The algorithm starts with a set that contains all
+        the features and keeps removing features in a greedy manner by selecting the feature that, in addition to the
+        other selected features, gives the worst possible accuracy.
+    """
 
     def __init__(self, way, data_set, classifier):
         self.way = way
@@ -62,9 +72,10 @@ class Selection(object):
 
     def get_features(self, features):
         """
+        Get the next possible set of features based on the algorithm.
 
-        :param features:
-        :return:
+        :param features: Current set of features.
+        :return: Next possible set of features.
         """
         if self.way == FORWARD_SELECTION:
             return self.features_add_one_set(features)
@@ -93,7 +104,6 @@ class Selection(object):
 
         :return:
         """
-        # TODO: Say something about Forward Selection and Backward Elimination
 
         # For statistics
         accuracies = []
@@ -131,9 +141,11 @@ class Selection(object):
                     current_best_accuracy = accuracy
                     current_best_features = child
 
-                print("\tUsing feature(s) {0} accuracy is {1:.2f}%.".format(child, accuracy * 100))
+                print("\tUsing feature(s) {0} accuracy is {1:.2f}%.".format(set(child), accuracy * 100))
 
-            print("\nFeature set {0} was best, accuracy is {1:.2f}%.\n".format(current_best_features,
+            if best_accuracy > current_best_accuracy:
+                print("\n(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
+            print("\nFeature set {0} was best, accuracy is {1:.2f}%.\n".format(set(current_best_features),
                                                                                current_best_accuracy * 100))
             feature = current_best_features
 
@@ -144,9 +156,7 @@ class Selection(object):
                 best_accuracy = current_best_accuracy
                 best_features = current_best_features
 
-            # TODO: ACCURACY DESCREASED CALCULATION AND PRINT
-
         print("\nFinished search!! The best feature subset is {0} which has an accuracy of {1:.2f}%.\n"
-              .format(best_features, best_accuracy * 100))
+              .format(set(best_features), best_accuracy * 100))
 
         return accuracies, features

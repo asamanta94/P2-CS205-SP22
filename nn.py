@@ -7,6 +7,9 @@ DATA_INDEX = 1
 
 
 class NN(object):
+    """
+    Class to run the nearest neighbor algorithm and run leave one out evaluation.
+    """
 
     def __init__(self, data_set):
         self.data_set = data_set
