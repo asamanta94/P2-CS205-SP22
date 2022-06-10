@@ -44,7 +44,7 @@ class NN(object):
         """
         # Get K nearest neighbors for the sample data point
         trained_data_len = len(trained_data)
-        smallest_distance = 1000000
+        smallest_distance = 1e10
         smallest_distance_class = 1.0
 
         # Calculate the euclidean distances to all the neighbors and get the class for the data point
