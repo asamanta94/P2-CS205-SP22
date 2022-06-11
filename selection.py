@@ -98,11 +98,6 @@ class Selection(object):
         """
         Use greedy search for figuring out the best possible set of features. Two searches are
         possible. Forward selection and backward elimination. Both searches are greedy in nature.
-
-        FORWARD SELECTION
-
-        BACKWARD ELIMINATION
-
         :return:
         """
 
@@ -138,22 +133,24 @@ class Selection(object):
             for child in children:
                 self.classifier.feature_list = child
                 accuracy = self.classifier.evaluate()
-                if accuracy > current_best_accuracy:
+                if accuracy >= current_best_accuracy:
                     current_best_accuracy = accuracy
                     current_best_features = child
 
                 print("\tUsing feature(s) {0} accuracy is {1:.2f}%.".format(set(child), accuracy * 100))
 
-            if best_accuracy > current_best_accuracy:
+            if best_accuracy >= current_best_accuracy:
                 print("\n(Warning, Accuracy has decreased! Continuing search in case of local maxima)")
             print("\nFeature set {0} was best, accuracy is {1:.2f}%.\n".format(set(current_best_features),
                                                                                current_best_accuracy * 100))
+            # Set the next best set of features for consideration
             feature = current_best_features
 
             accuracies.append(current_best_accuracy)
             features.append(current_best_features)
 
-            if best_accuracy < current_best_accuracy:
+            # Update the global best accuracy
+            if best_accuracy <= current_best_accuracy:
                 best_accuracy = current_best_accuracy
                 best_features = current_best_features
 

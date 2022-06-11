@@ -25,8 +25,9 @@ FILE_PATHS = [SMALL_DATASET_PATH, LARGE_DATASET_PATH, CALIBRATION_FILE_1_PATH, C
 
 def get_user_input():
     """
+    Get the input from the user.
 
-    :return:
+    :return: The feature selection algorithm & the file path.
     """
     print("Welcome to Aritra Samanta's Feature Selection Algorithm.")
     f_path = input("Type in the name of the file to test: ")
@@ -41,9 +42,9 @@ def get_data(algorithm, file_path):
     """
     Function to run the algorithm on the file path.
 
-    :param algorithm:
-    :param file_path:
-    :return:
+    :param algorithm: Feature selection algorithm to run.
+    :param file_path: The path to the dataset.
+    :return: List of accuracies and features.
     """
     # Get the dataset from file
     dataset = np.genfromtxt(file_path)
